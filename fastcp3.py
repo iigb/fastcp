@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # optimize I/O speed for copying to USB drive
 
 import shutil, sys, os, time
@@ -26,13 +26,13 @@ def do_copy(src,dst):
 # destination exists, skip
     dst_size = dst_check(dst)
     if dst_size > 0:
-        print "Skipping", dst, '%6.2f Mb' % (dst_size/million)
+        print ("Skipping", dst, '%6.2f Mb' % (dst_size/million))
         return 0
     
     t1 = time.time()
     src_size = os.path.getsize(src)
 
-    print "Copying", src, '%6.2f Mb' % (src_size/million)
+    print("Copying", src, '%6.2f Mb' % (src_size/million))
     with open(src, 'rb') as fsrc:
         with open(dst, 'wb') as fdst:
             shutil.copyfileobj(fsrc, fdst, buffer_size)
@@ -40,7 +40,7 @@ def do_copy(src,dst):
             os.fsync(fdst.fileno())
 
     t2 = time.time()
-    print '%6.2f s' %  ((t2-t1)*1.0), dst
+    print('%6.2f s' %  ((t2-t1)*1.0), dst)
     return src_size
 
 def main():
@@ -54,8 +54,8 @@ def main():
 
     t99 = time.time()
     elapsed = (t99-t0) * 1.0
-    print '%6.2f s' %  (elapsed), "total", '%6.2f Mb' % (tbytes/million)
-    print 'I/O rate: %6.2f Mb/s' % ((tbytes/elapsed/million))
+    print('%6.2f s' %  (elapsed), "total", '%6.2f Mb' % (tbytes/million))
+    print('I/O rate: %6.2f Mb/s' % ((tbytes/elapsed/million)))
     
 if __name__ == '__main__': 
     main() 
